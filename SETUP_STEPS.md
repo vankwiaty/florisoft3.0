@@ -1,30 +1,28 @@
-# Step-by-step: Run FastAPI, GitHub, then Streamlit
+# Step-by-step: Run Florisoft (Streamlit), GitHub, deploy
 
-**Do I have to keep it always on?** No. Run it when you want to use the app, then stop (Ctrl+C). Next time you want it, start again. To start both FastAPI and Streamlit in one go, use the script below.
+**Do I have to keep it always on?** No. Run it when you want to use the app, then stop (Ctrl+C). Next time you want it, start again. To start the app, run: `streamlit run web/app.py` (from project root).
 
-**Want to access it from another computer (or phone) without your PC on?** Deploy the app to the cloud (e.g. Render.com, free tier). See **DEPLOY.md** for step-by-step instructions.
+**Want to access it from another computer (or phone) without your PC on?** Deploy the Streamlit app to the cloud (Streamlit Community Cloud or Render). See **DEPLOY.md**.
 
-**One-click start (after first-time setup):**  
-In PowerShell, from the project folder, run:
+**Start the app (Streamlit only – no FastAPI):**  
+From project folder:
 ```powershell
-.\run_web.ps1
+.\venv\Scripts\Activate.ps1
+streamlit run web/app.py
 ```
-That opens FastAPI in one window and Streamlit in another. When you're done, close both windows (or Ctrl+C in each).
+Then open http://localhost:8501.
 
 ---
 
-## Part 1 – Run FastAPI for the first time
+## Part 1 – Run the app for the first time (Streamlit only)
 
 1. **Open a terminal in your project**
    - In Cursor: **Terminal → New Terminal** (or `` Ctrl+` ``).
-   - Make sure you're in the project folder: `C:\Users\Tom\Documents\GitHub\florisoft3.0`
+   - Make sure you're in: `C:\Users\Tom\Documents\GitHub\florisoft3.0`
 
 2. **Create a virtual environment (recommended)**
    ```powershell
    python -m venv venv
-   ```
-   Then activate it:
-   ```powershell
    .\venv\Scripts\Activate.ps1
    ```
    (You should see `(venv)` in the prompt.)
@@ -34,21 +32,14 @@ That opens FastAPI in one window and Streamlit in another. When you're done, clo
    pip install -r requirements.txt
    ```
 
-4. **Start the FastAPI backend**
+4. **Start the app**
    ```powershell
-   uvicorn backend.main:app --reload
+   streamlit run web/app.py
    ```
-   Leave this terminal open. You should see something like:
-   `Uvicorn running on http://127.0.0.1:8000`
+   Open **http://localhost:8501** in your browser.
 
-5. **Check that it works**
-   - In a browser open: **http://127.0.0.1:8000**  
-     You should see: `{"app":"Florisoft API","docs":"/docs"}`
-   - Open: **http://127.0.0.1:8000/docs**  
-     You should see the interactive API docs (Swagger).
-
-6. **Stop the server when you're done**
-   - In the terminal where uvicorn is running, press **Ctrl+C**.
+5. **Stop when done**
+   - In the terminal press **Ctrl+C**.
 
 ---
 
@@ -86,33 +77,16 @@ That opens FastAPI in one window and Streamlit in another. When you're done, clo
 
 ---
 
-## Part 3 – What to do next with Streamlit
+## Part 3 – Use the app next time
 
-1. **Start the FastAPI backend again** (if it’s not running)
-   - Terminal 1:
-   ```powershell
-   cd C:\Users\Tom\Documents\GitHub\florisoft3.0
-   .\venv\Scripts\Activate.ps1
-   uvicorn backend.main:app --reload
-   ```
-
-2. **Open a second terminal** (Terminal → New Terminal).
-
-3. **Activate venv and run Streamlit**
+1. **Start the app** (if it’s not running)
    ```powershell
    cd C:\Users\Tom\Documents\GitHub\florisoft3.0
    .\venv\Scripts\Activate.ps1
    streamlit run web/app.py
    ```
-
-4. **Use the web app**
-   - Browser should open to **http://localhost:8501** (or open that URL manually).
-   - Use the **sidebar** to switch: **Marże**, **Checklist (PDF)**, **Proformy**, **Fetch & Email**.
-   - The app calls your FastAPI backend; if you see "Backend nie działa", make sure uvicorn is running in the first terminal.
-
-5. **Stop when finished**
-   - Streamlit: **Ctrl+C** in the Streamlit terminal.
-   - FastAPI: **Ctrl+C** in the uvicorn terminal.
+2. Open **http://localhost:8501** and use the sidebar: **Marże**, **Checklist (PDF)**, **Proformy**, **Fetch & Email**.
+3. **Stop:** **Ctrl+C** in the terminal.
 
 ---
 
@@ -120,11 +94,8 @@ That opens FastAPI in one window and Streamlit in another. When you're done, clo
 
 | What              | Command / URL |
 |-------------------|----------------|
-| **Start both (API + Streamlit)** | `.\run_web.ps1` |
 | Activate venv     | `.\venv\Scripts\Activate.ps1` |
-| Run FastAPI       | `uvicorn backend.main:app --reload` |
-| API base          | http://127.0.0.1:8000 |
-| API docs          | http://127.0.0.1:8000/docs |
-| Run Streamlit     | `streamlit run web/app.py` |
+| Run app           | `streamlit run web/app.py` |
 | Web UI            | http://localhost:8501 |
 | Push to GitHub    | `git add .` → `git commit -m "..."` → `git push origin main` |
+| Deploy (any device) | See **DEPLOY.md** (Streamlit Community Cloud or Render) |
