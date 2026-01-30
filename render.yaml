@@ -1,0 +1,21 @@
+# Render.com blueprint – deploy API + Streamlit so the app is available 24/7 from any device.
+# After first deploy: set FLORISOFT_API_URL on the web service to your API URL (see DEPLOY.md).
+
+services:
+  - type: web
+    name: florisoft-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+
+  - type: web
+    name: florisoft-web
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run web/app.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: FLORISOFT_API_URL
+        sync: false
+        # Set this in Render dashboard to: https://florisoft-api.onrender.com (or your API service URL)
